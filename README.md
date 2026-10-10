@@ -1,3 +1,5 @@
+<img src="website/assets/mons-logo.svg" alt="Mons logo" width="128" height="128">
+
 # Mons
 
 **Your terminal. Agent ready.**

@@ -1,0 +1,68 @@
+name: Bug report
+description: Report a reproducible problem with Mons.
+title: "[Bug]: "
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Mons is in development. Please use this form for ordinary product bugs.
+        For a suspected vulnerability, follow SECURITY.md instead.
+        Do not post passwords, private keys, tokens or active pairing links.
+  - type: dropdown
+    id: component
+    attributes:
+      label: Affected component
+      options:
+        - iPhone app
+        - Host or CLI
+        - Installation or upgrade
+        - Website or documentation
+        - Other
+    validations:
+      required: true
+  - type: input
+    id: versions
+    attributes:
+      label: Versions
+      description: App version/build and Host version, if known. For website-only reports, write N/A.
+      placeholder: App x.y.z (build), Host x.y.z
+    validations:
+      required: true
+  - type: input
+    id: systems
+    attributes:
+      label: Devices and operating systems
+      description: iPhone/iOS and host platform/version, where applicable.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Describe the exact actions, or explain when a one-off failure occurred.
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: actual
+    attributes:
+      label: Actual behavior
+      description: Include the original error message and approximate incident time/time zone.
+    validations:
+      required: true
+  - type: textarea
+    id: network
+    attributes:
+      label: Network and connection context
+      description: Wi-Fi/cellular, ordinary SSH/paired connection, observed route and Tailscale status. Leave blank if unrelated.
+  - type: textarea
+    id: diagnostics
+    attributes:
+      label: Logs, diagnostics or screenshots
+      description: Optional. Review before posting; include only what you choose to make public.

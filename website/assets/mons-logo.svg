@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" role="img" aria-labelledby="title description">
+  <title id="title">Mons</title>
+  <desc id="description">A continuous rounded M ribbon that loops through a compact session clasp.</desc>
+  <path
+    d="M252 758V410C252 322 354 282 418 346L512 440L594 522Q616 544 594 566L534 626Q512 648 490 626L430 566Q408 544 430 522L512 440L606 346C670 282 772 322 772 410V758"
+    fill="none"
+    stroke="#00F076"
+    stroke-width="68"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+  />
+</svg>

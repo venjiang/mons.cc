@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#020906">
+    <meta name="description" content="Mons is a remote terminal built for coding agents, wherever you are.">
+    <title>Mons — Coming soon</title>
+    <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=__MONS_ASSET_VERSION__">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png?v=__MONS_ASSET_VERSION__">
+    <link rel="shortcut icon" type="image/svg+xml" href="assets/favicon.svg?v=__MONS_ASSET_VERSION__">
+    <link rel="apple-touch-icon" href="assets/mons-pwa-192.png?v=__MONS_ASSET_VERSION__">
+    <link rel="stylesheet" href="styles.css?v=__MONS_ASSET_VERSION__">
+    <script src="animation.js?v=__MONS_ASSET_VERSION__" defer></script>
+  </head>
+  <body>
+    <div class="ambient" aria-hidden="true"></div>
+
+    <header class="site-header">
+      <a class="brand" href="/" aria-label="Mons home">
+        <img src="assets/mons-logo.svg?v=__MONS_ASSET_VERSION__" width="38" height="38" alt="">
+        <span>Mons</span>
+      </a>
+      <span class="build-state"><span aria-hidden="true"></span>In development</span>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">Remote terminal · Built for coding agents</p>
+          <h1 id="hero-title">Your terminal.<br><em>Agent ready.</em></h1>
+          <p class="intro">Access your Mac terminal from your iPhone, wherever you are. Mons is designed around coding-agent workflows, so you can follow progress, respond, and keep work moving.</p>
+          <div class="coming-soon" aria-label="Mons is coming soon">
+            <span class="status-dot" aria-hidden="true"></span>
+            <strong>Coming soon</strong>
+            <span>Private beta in progress</span>
+          </div>
+        </div>
+
+        <div class="terminal-wrap" aria-label="Mons terminal preview">
+          <div class="terminal-glow" aria-hidden="true"></div>
+          <div class="terminal">
+            <div class="terminal-bar">
+              <div class="terminal-controls" aria-hidden="true"><i></i><i></i><i></i></div>
+              <span>local-mac · mons</span>
+              <span class="secure"><span aria-hidden="true"></span>secure</span>
+            </div>
+            <div class="terminal-body" aria-hidden="true">
+              <p class="terminal-line line-one"><span class="prompt">~</span> mons pair</p>
+              <p class="terminal-line line-two muted">Scan this QR code with the Mons App:</p>
+              <p class="terminal-line line-three muted">Pairing Link:</p>
+              <p class="terminal-line line-four pairing-link">mons://pair/v1#••••••••••••</p>
+              <p class="terminal-line line-five muted"><span class="full-copy">Waiting for the Mons App to complete pairing...</span><span class="compact-copy">Waiting for the Mons App...</span></p>
+              <p class="terminal-line line-six success">Pairing completed</p>
+              <p class="terminal-line line-seven terminal-gap" aria-hidden="true">&nbsp;</p>
+              <p class="terminal-line line-eight"><span class="prompt">~</span> mons logs -l debug</p>
+              <p class="terminal-line line-nine"><span class="timestamp">10:35:12Z</span> <span class="log-info">INFO</span> Service started</p>
+              <p class="terminal-line line-ten"><span class="timestamp">10:35:18Z</span> <span class="log-debug">DEBU</span> Device connected</p>
+              <p class="terminal-line line-eleven"><span class="timestamp">10:35:19Z</span> <span class="log-debug">DEBU</span> <span class="full-copy">Tunnel authenticated</span><span class="compact-copy">Authenticated</span></p>
+              <p class="terminal-line line-twelve"><span class="timestamp">10:35:19Z</span> <span class="log-debug">DEBU</span> Tunnel ready</p>
+              <p class="terminal-line line-thirteen"><span class="timestamp">10:35:22Z</span> <span class="log-debug">DEBU</span> <span class="full-copy">SSH forwarding started</span><span class="compact-copy">SSH stream</span></p>
+              <p class="terminal-line line-fourteen"><span class="timestamp">10:35:23Z</span> <span class="log-debug">DEBU</span> <span class="full-copy">Device forwarding started</span><span class="compact-copy">Device stream</span></p>
+              <p class="terminal-line line-fifteen"><span class="timestamp">10:35:24Z</span> <span class="log-debug">DEBU</span> Stream active</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <span>© 2026 Mons</span>
+    </footer>
+  </body>
+</html>

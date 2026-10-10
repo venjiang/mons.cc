@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Read the troubleshooting guide
+    url: https://github.com/venjiang/mons.cc/blob/main/docs/troubleshooting.md
+    about: Check installation, pairing, routes and diagnostic collection first.
+  - name: Security reporting policy
+    url: https://github.com/venjiang/mons.cc/blob/main/SECURITY.md
+    about: Request a private reporting channel without posting vulnerability details.

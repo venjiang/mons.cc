@@ -60,3 +60,11 @@ fastlane/report.xml
 fastlane/Preview.html
 fastlane/screenshots/**/*.png
 fastlane/test_output
+
+# Local website previews and private release material
+.DS_Store
+output/
+.playwright-cli/
+tls/
+*.pem
+*.key

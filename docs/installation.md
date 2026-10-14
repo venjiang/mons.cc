@@ -5,7 +5,7 @@
 Mons is in development. [Mons CLI 0.5.29 development preview](https://github.com/venjiang/mons.cc/releases/tag/cli-v0.5.29)
 contains native Host ZIPs for macOS and Linux. ZIPs and their checksum files are
 downloaded from GitHub Releases, including through the curl installer below.
-The npm package is not published.
+The npm preview `@venjiang/mons@0.5.29` is published with the `beta` tag.
 
 This repository provides CLI and local Host service installation only. It does
 not provide mobile app or Relay downloads/installations.
@@ -109,11 +109,13 @@ Developer ID or Apple notarization. App and Relay installation are not provided.
 
 ## Alternative: npm/npx
 
-This route requires Node.js 20 or later and npm. The package name is provisionally
-`@venjiang/mons`; it is not published yet. After publication:
+This route requires Node.js 20 or later and npm. The development preview is
+published as `@venjiang/mons@0.5.29` with the `beta` tag. macOS is still ad-hoc
+signed and unnotarized. npm's initial `latest` tag currently selects the same
+preview; it does not establish Developer ID signing or Apple approval.
 
 ```sh
-npm install -g @venjiang/mons
+npm install -g @venjiang/mons@beta
 mons status
 mons pair
 ```
@@ -126,7 +128,7 @@ Local project installation and npx cache downloads do not start the service.
 To explicitly install or upgrade the Host using the package:
 
 ```sh
-npx @venjiang/mons install
+npx @venjiang/mons@beta install
 ```
 
 If installation scripts were disabled with `--ignore-scripts`, run the npm

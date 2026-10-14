@@ -15,7 +15,9 @@ not Developer ID signed or notarized, and Gatekeeper may block it. See the
 The [curl installer](docs/installation.md#default-curl-from-github) downloads
 the compiled CLI from GitHub, verifies the privately maintained platform
 installer, then installs the CLI and registers/starts the local Host service.
-The npm package has not been published.
+The [npm development preview](https://www.npmjs.com/package/@venjiang/mons)
+is also available as `@venjiang/mons@0.5.29` with the `beta` tag. It uses the
+same native binaries and local Host installer; macOS signing limits still apply.
 
 ## Install the CLI and Host service
 
@@ -29,10 +31,22 @@ Run as your normal user without `sudo`. The Host service is not the Relay
 service; installation does not enable SSH or install Herdr/tmux. See the
 installation guide for checksum verification, requirements and upgrade safety.
 
+For developers with Node.js 20 or later:
+
+```sh
+npm install -g @venjiang/mons@beta
+# Or explicitly install/upgrade the local Host service:
+npx @venjiang/mons@beta install
+```
+
+Use a writable npm prefix without `sudo`; do not force replacement of an
+existing CLI link. npm's initial `latest` tag currently also points to this
+development preview, not a notarized macOS release.
+
 ## Start here
 
 - [Website](https://mons.cc)
-- [Installation](docs/installation.md) — preview ZIPs, GitHub-backed curl and the planned npm channel.
+- [Installation](docs/installation.md) — preview ZIPs, GitHub-backed curl and npm/npx.
 - [Getting started](docs/getting-started.md) — connections, pairing and sessions.
 - [Troubleshooting](docs/troubleshooting.md) — connection problems, logs and diagnostics.
 - [Report a bug or request a feature](https://github.com/venjiang/mons.cc/issues/new/choose)

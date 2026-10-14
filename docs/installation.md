@@ -45,6 +45,10 @@ verification, run the compiled executable from the extracted directory:
 ./mons --help
 ```
 
+GitHub's automatic `Source code` ZIP and tar.gz for `cli-v0.5.29` contain only
+the release's README snapshot, not the CLI binary or website source. They are
+not installation packages; use the named platform assets in the table above.
+
 Installation creates or updates a per-user Host service. It does not install
 the mobile app or configure SSH access or Herdr/tmux. Container CLI smoke tests
 do not replace real Linux systemd installation or complete pairing and
@@ -54,7 +58,7 @@ upgrade/rollback acceptance.
 
 | Platform | Host installation |
 | --- | --- |
-| macOS | Apple Silicon or Intel; run as the logged-in user without sudo |
+| macOS | macOS 13+ on Apple Silicon or Intel; run as the logged-in user without sudo |
 | Linux | x86_64 or arm64; a non-root user and an available systemd user manager |
 | Windows | Not supported by the current Host packages |
 

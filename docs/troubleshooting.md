@@ -1,5 +1,23 @@
 # Troubleshooting
 
+## Host download returns 404
+
+Check the requested version against the
+[CLI releases](https://github.com/venjiang/mons.cc/releases). Versions use a
+`cli-vVERSION` tag, for example `cli-v0.5.29`; a missing platform ZIP or checksum
+stops installation. The automatic `Source code` archives are documentation
+snapshots, not replacement binary packages. Do not bypass a failed checksum.
+
+To verify the published preview without installing or changing the service:
+
+```sh
+curl -fsSL https://mons.cc/install.sh | sh -s -- --verify-only 0.5.29
+```
+
+The curl entry installs the CLI and its local Host service only, not the mobile
+app or Relay. See [Installation](installation.md) for platform requirements and
+the macOS ad-hoc signing limitation.
+
 ## Collect the basic facts
 
 Record the app version, Host version, operating systems, the action that

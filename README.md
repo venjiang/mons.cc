@@ -52,6 +52,12 @@ Website source, installation logic, build tooling and deployment are maintained
 in the private development repository. The website remains at https://mons.cc;
 moving its source does not change the CLI download or installation addresses.
 
+For `cli-v0.5.29`, the release tag is an independent README-only snapshot.
+GitHub still displays automatic `Source code (zip)` and `Source code (tar.gz)`
+links, but those archives contain documentation only. Download the named
+`mons-0.5.29-*.zip` assets for the compiled CLI. Earlier repository history
+has not been rewritten by the website-source migration.
+
 The repository's [Apache-2.0 license](LICENSE) covers the documentation source
 here. Product binaries have their own licensing and
 third-party notices; they are not made open source by this repository.

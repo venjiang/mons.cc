@@ -7,8 +7,8 @@ contains native Host ZIPs for macOS and Linux. ZIPs and their checksum files are
 downloaded from GitHub Releases, including through the curl installer below.
 The npm package is not published.
 
-The iPhone app is installed separately. Its App Store or TestFlight link will
-be published when available; downloading a Host ZIP does not install the app.
+This repository provides CLI and local Host service installation only. It does
+not provide mobile app or Relay downloads/installations.
 
 ## Development preview downloads
 
@@ -35,16 +35,14 @@ shasum -a 256 -c mons-0.5.29-macos-universal.zip.sha256
 sha256sum -c mons-0.5.29-linux-x86_64.zip.sha256
 ```
 
-Each ZIP contains `mons`, `install.sh`, `README.md`, `SBOM.spdx.json`, dependency
-notices and license texts. Read its README. From the extracted package directory,
-run the matching installer as your normal user, without `sudo`:
+Each ZIP contains `mons`, `README.md`, `SBOM.spdx.json`, dependency notices and
+license texts, but no installation scripts. Read its README and use the hosted
+curl entry below to install the CLI and user-level Host service. For manual
+verification, run the compiled executable from the extracted directory:
 
 ```sh
-# macOS
-sh install.sh ./mons
-
-# Linux
-bash install.sh ./mons
+./mons --version
+./mons --help
 ```
 
 Installation creates or updates a per-user Host service. It does not install
@@ -72,22 +70,22 @@ timeout and stat. It does not enable systemd linger automatically.
 
 ## Default: curl from GitHub
 
-Use the current bootstrap directly from this repository:
+Use the privately maintained bootstrap hosted by Mons:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/venjiang/mons.cc/main/website/install.sh | sh
+curl -fsSL https://mons.cc/install.sh | sh
 ```
 
 To check a download without installing or changing the service:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/venjiang/mons.cc/main/website/install.sh | sh -s -- --verify-only
+curl -fsSL https://mons.cc/install.sh | sh -s -- --verify-only
 ```
 
 To select a specific published Host version:
 
 ```sh
-curl -fsSL https://raw.githubusercontent.com/venjiang/mons.cc/main/website/install.sh | sh -s -- VERSION
+curl -fsSL https://mons.cc/install.sh | sh -s -- VERSION
 ```
 
 Replace `VERSION` with the published `x.y.z` value, for example `0.5.29`.
@@ -97,12 +95,13 @@ among the latest 20 GitHub release records; published development previews are
 included, while drafts and non-CLI tags are ignored. API failures stop before
 installation; specify a version to avoid the list request.
 
-The bootstrap verifies the
-archive checksum, required files and binary inventory before handing control
-to the matching per-user installer. macOS signature integrity and architecture
-checks remain enabled; they do not establish Developer ID or Apple notarization.
-The `https://mons.cc/install.sh` copy is deployed separately; this repository
-release does not update that live website endpoint.
+The bootstrap downloads the compiled CLI ZIP, its SHA256 and
+`INSTALLER-SHA256SUMS` from GitHub. It validates the archive/binary inventory and
+the versioned private platform installer served by `mons.cc`, then installs the
+CLI and registers/starts the local user-level Host service. Installer and website
+source are maintained privately, not in this repository. macOS signature
+integrity and architecture checks remain enabled; they do not establish
+Developer ID or Apple notarization. App and Relay installation are not provided.
 
 ## Alternative: npm/npx
 

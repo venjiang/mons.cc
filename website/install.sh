@@ -43,13 +43,39 @@ mons_install() (
     work_directory=$(mktemp -d "${TMPDIR:-$temporary_base}/mons-download.XXXXXX")
     trap 'rm -rf -- "$work_directory"' EXIT
     trap 'exit 1' HUP INT TERM
-    release_base=https://mons.cc/releases/host
-    if [ "$platform" = Linux ]; then release_base="$release_base/$profile"; fi
     if [ -z "$version" ]; then
         curl --fail --silent --show-error --location --proto '=https' --proto-redir '=https' \
-            --connect-timeout 10 --max-time 30 --max-filesize 1024 \
-            --output "$work_directory/latest.txt" "$release_base/latest.txt"
-        version=$(cat "$work_directory/latest.txt")
+            --connect-timeout 10 --max-time 30 --max-filesize 1048576 \
+            --output "$work_directory/releases.json" \
+            'https://api.github.com/repos/venjiang/mons.cc/releases?per_page=20'
+        : >"$work_directory/versions.txt"
+        if [ "$platform" = Darwin ]; then
+            index=0
+            while [ "$index" -lt 20 ]; do
+                tag=$(plutil -extract "$index.tag_name" raw -expect string -o - "$work_directory/releases.json" 2>/dev/null) || break
+                draft=$(plutil -extract "$index.draft" raw -expect bool -o - "$work_directory/releases.json")
+                case "$draft:$tag" in
+                    false:cli-v*)
+                        candidate=${tag#cli-v}
+                        case "$candidate" in
+                            *[!0-9.]*|'') ;;
+                            *) if printf '%s\n' "$candidate" | grep -Eq '^[0-9]+\.[0-9]+\.[0-9]+$'; then
+                                printf '%s\n' "$candidate" >>"$work_directory/versions.txt"
+                            fi ;;
+                        esac ;;
+                esac
+                index=$((index + 1))
+            done
+        else
+            jq -r 'if type != "array" then error("Invalid GitHub release response") else
+                .[] | select(.draft == false and (.tag_name | type == "string")) |
+                .tag_name | select(test("^cli-v[0-9]+\\.[0-9]+\\.[0-9]+$") and (contains("\n") | not)) |
+                ltrimstr("cli-v") end' "$work_directory/releases.json" >"$work_directory/versions.txt"
+        fi
+        version=$(LC_ALL=C sort -t. -k1,1n -k2,2n -k3,3n "$work_directory/versions.txt" | tail -n 1)
+        [ -n "$version" ] || {
+            echo 'No published Mons CLI release found; choose an explicit version' >&2; exit 1;
+        }
     fi
     case "$version" in
         *[!0-9.]*|'') echo 'Invalid release version; expected MAJOR.MINOR.PATCH' >&2; exit 1 ;;
@@ -59,14 +85,15 @@ mons_install() (
         exit 1
     fi
     package_name="mons-$version-$profile"
+    release_base="https://github.com/venjiang/mons.cc/releases/download/cli-v$version"
     archive="$work_directory/$package_name.zip"
     echo "Downloading Mons $version for $platform $architecture"
     curl --fail --silent --show-error --location --proto '=https' --proto-redir '=https' \
         --connect-timeout 10 --max-time 120 --max-filesize 52428800 \
-        --output "$archive" "$release_base/$version/$package_name.zip"
+        --output "$archive" "$release_base/$package_name.zip"
     curl --fail --silent --show-error --location --proto '=https' --proto-redir '=https' \
         --connect-timeout 10 --max-time 30 --max-filesize 4096 \
-        --output "$archive.sha256" "$release_base/$version/$package_name.zip.sha256"
+        --output "$archive.sha256" "$release_base/$package_name.zip.sha256"
     expected_sha256=$(awk 'NR == 1 { print $1 }' "$archive.sha256")
     if ! printf '%s\n' "$expected_sha256" | grep -Eq '^[a-f0-9]{64}$'; then
         echo 'Invalid release checksum' >&2; exit 1

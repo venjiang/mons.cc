@@ -2,13 +2,55 @@
 
 ## Availability
 
-Mons is in development. No public product release has been attached to this
-repository yet, and the npm package is not published. Use only a build supplied
-through the current development or beta process. The following commands
-describe the public installation flow once releases are available.
+Mons is in development. [Mons CLI 0.5.29 development preview](https://github.com/venjiang/mons.cc/releases/tag/cli-v0.5.29)
+contains native Host ZIPs for macOS and Linux. ZIPs and their checksum files are
+downloaded from GitHub Releases, including through the curl installer below.
+The npm package is not published.
 
 The iPhone app is installed separately. Its App Store or TestFlight link will
 be published when available; downloading a Host ZIP does not install the app.
+
+## Development preview downloads
+
+Download the ZIP and its matching `.sha256` file from the preview release:
+
+| Platform | Archive |
+| --- | --- |
+| macOS 13+ Apple Silicon / Intel | `mons-0.5.29-macos-universal.zip` |
+| Linux x86_64 | `mons-0.5.29-linux-x86_64.zip` |
+| Linux arm64 | `mons-0.5.29-linux-aarch64.zip` |
+
+The macOS executable is **ad-hoc signed, not Developer ID signed or Apple
+notarized**. Gatekeeper may block a downloaded copy. A checksum verifies
+integrity, not developer identity or Apple approval; this preview does not
+disable or bypass system security protections.
+
+In the download directory, verify the selected archive before extracting it:
+
+```sh
+# macOS
+shasum -a 256 -c mons-0.5.29-macos-universal.zip.sha256
+
+# Linux x86_64 (use linux-aarch64 instead for arm64)
+sha256sum -c mons-0.5.29-linux-x86_64.zip.sha256
+```
+
+Each ZIP contains `mons`, `install.sh`, `README.md`, `SBOM.spdx.json`, dependency
+notices and license texts. Read its README. From the extracted package directory,
+run the matching installer as your normal user, without `sudo`:
+
+```sh
+# macOS
+sh install.sh ./mons
+
+# Linux
+bash install.sh ./mons
+```
+
+Installation creates or updates a per-user Host service. It does not install
+the mobile app or configure SSH access or Herdr/tmux. Container CLI smoke tests
+do not replace real Linux systemd installation or complete pairing and
+upgrade/rollback acceptance.
 
 ## Host requirements
 
@@ -28,30 +70,39 @@ include curl, shasum, unzip, codesign, lipo and plutil. On Linux they include
 curl, sha256sum, unzip, jq, file and bash; service installation also needs flock,
 timeout and stat. It does not enable systemd linger automatically.
 
-## Default: curl
+## Default: curl from GitHub
 
-After a public release is available:
+Use the current bootstrap directly from this repository:
 
 ```sh
-curl -fsSL https://mons.cc/install.sh | sh
+curl -fsSL https://raw.githubusercontent.com/venjiang/mons.cc/main/website/install.sh | sh
 ```
 
 To check a download without installing or changing the service:
 
 ```sh
-curl -fsSL https://mons.cc/install.sh | sh -s -- --verify-only
+curl -fsSL https://raw.githubusercontent.com/venjiang/mons.cc/main/website/install.sh | sh -s -- --verify-only
 ```
 
 To select a specific published Host version:
 
 ```sh
-curl -fsSL https://mons.cc/install.sh | sh -s -- VERSION
+curl -fsSL https://raw.githubusercontent.com/venjiang/mons.cc/main/website/install.sh | sh -s -- VERSION
 ```
 
-Replace `VERSION` with the published `x.y.z` value. The bootstrap verifies the
+Replace `VERSION` with the published `x.y.z` value, for example `0.5.29`.
+Explicit versions use the `cli-vVERSION` release tag without a version-list
+request. By default, the installer selects the highest numeric CLI version
+among the latest 20 GitHub release records; published development previews are
+included, while drafts and non-CLI tags are ignored. API failures stop before
+installation; specify a version to avoid the list request.
+
+The bootstrap verifies the
 archive checksum, required files and binary inventory before handing control
-to the matching per-user installer. Public macOS packages also require the
-release signing and architecture checks.
+to the matching per-user installer. macOS signature integrity and architecture
+checks remain enabled; they do not establish Developer ID or Apple notarization.
+The `https://mons.cc/install.sh` copy is deployed separately; this repository
+release does not update that live website endpoint.
 
 ## Alternative: npm/npx
 

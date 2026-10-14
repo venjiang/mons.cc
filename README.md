@@ -8,10 +8,13 @@ Mons is a persistent remote terminal for iPhone, designed for coding-agent
 workflows. Connect to a host over SSH, return to an existing Herdr or tmux
 session, and keep using the same shell and working context from your phone.
 
-**Status: in development.** The website is Coming Soon. This repository has no
-public product release yet, and the npm package has not been published.
-Installation examples describe the intended public flow; they are not a
-promise that a public download is available today.
+**Status: in development.** [Mons CLI 0.5.29 development preview](https://github.com/venjiang/mons.cc/releases/tag/cli-v0.5.29)
+provides native Host ZIPs for macOS and Linux. The macOS preview is ad-hoc signed,
+not Developer ID signed or notarized, and Gatekeeper may block it. See the
+[preview installation guide](docs/installation.md#development-preview-downloads).
+The [GitHub-backed curl installer](docs/installation.md#default-curl-from-github)
+downloads the same release assets. The website remains Coming Soon; its hosted
+installer is updated separately. The npm package has not been published.
 
 ## What Mons does
 
@@ -27,7 +30,7 @@ work. They are not advertised as currently available features.
 ## Start here
 
 - [Website](https://mons.cc)
-- [Installation](docs/installation.md) — curl is the default; npm/npx is an alternative for developers.
+- [Installation](docs/installation.md) — preview ZIPs, GitHub-backed curl and the planned npm channel.
 - [Getting started](docs/getting-started.md) — connections, pairing and sessions.
 - [Troubleshooting](docs/troubleshooting.md) — connection problems, logs and diagnostics.
 - [Report a bug or request a feature](https://github.com/venjiang/mons.cc/issues/new/choose)
@@ -40,7 +43,7 @@ distribution links will be added when available.
 ## This repository
 
 This is the public website, user-documentation and feedback repository.
-Website source lives in [`website/`](website/). Product releases will be
+Website source lives in [`website/`](website/). Product releases are
 attached to [GitHub Releases](https://github.com/venjiang/mons.cc/releases)
 rather than committed as large binary files.
 

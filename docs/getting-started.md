@@ -1,8 +1,9 @@
 # Getting started
 
 Mons is currently in development. Start with the
-[availability and installation requirements](installation.md); public app and
-Host download links are not available from this repository yet.
+[availability and installation requirements](installation.md). Native Host
+preview downloads and the curl installer use GitHub Releases. Public app
+distribution links and the npm installation channel are not available yet.
 
 ## Choose a connection
 

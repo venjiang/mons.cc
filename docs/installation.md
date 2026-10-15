@@ -2,23 +2,23 @@
 
 ## Availability
 
-Mons is in development. [Mons CLI 0.5.29 development preview](https://github.com/venjiang/mons.cc/releases/tag/cli-v0.5.29)
+Mons is in development. [Mons CLI 0.5.30 development preview](https://mons.cc/downloads/)
 contains native Host ZIPs for macOS and Linux. ZIPs and their checksum files are
-downloaded from GitHub Releases, including through the curl installer below.
-The npm preview `@venjiang/mons@0.5.29` is published with the `beta` tag.
+downloaded from the official website, including through the curl installer below.
+The npm preview `@venjiang/mons@0.5.30` is published with `latest` and `beta`.
 
 This repository provides CLI and local Host service installation only. It does
 not provide mobile app or Relay downloads/installations.
 
 ## Development preview downloads
 
-Download the ZIP and its matching `.sha256` file from the preview release:
+Download the ZIP and its matching `.sha256` file from [official downloads](https://mons.cc/downloads/):
 
 | Platform | Archive |
 | --- | --- |
-| macOS 13+ Apple Silicon / Intel | `mons-0.5.29-macos-universal.zip` |
-| Linux x86_64 | `mons-0.5.29-linux-x86_64.zip` |
-| Linux arm64 | `mons-0.5.29-linux-aarch64.zip` |
+| macOS 13+ Apple Silicon / Intel | `mons-0.5.30-macos-universal.zip` |
+| Linux x86_64 | `mons-0.5.30-linux-x86_64.zip` |
+| Linux arm64 | `mons-0.5.30-linux-aarch64.zip` |
 
 The macOS executable is **ad-hoc signed, not Developer ID signed or Apple
 notarized**. Gatekeeper may block a downloaded copy. A checksum verifies
@@ -29,10 +29,10 @@ In the download directory, verify the selected archive before extracting it:
 
 ```sh
 # macOS
-shasum -a 256 -c mons-0.5.29-macos-universal.zip.sha256
+shasum -a 256 -c mons-0.5.30-macos-universal.zip.sha256
 
 # Linux x86_64 (use linux-aarch64 instead for arm64)
-sha256sum -c mons-0.5.29-linux-x86_64.zip.sha256
+sha256sum -c mons-0.5.30-linux-x86_64.zip.sha256
 ```
 
 Each ZIP contains `mons`, `README.md`, `SBOM.spdx.json`, dependency notices and
@@ -42,6 +42,7 @@ verification, run the compiled executable from the extracted directory:
 
 ```sh
 ./mons --version
+./mons -V
 ./mons --help
 ```
 
@@ -72,7 +73,7 @@ include curl, shasum, unzip, codesign, lipo and plutil. On Linux they include
 curl, sha256sum, unzip, jq, file and bash; service installation also needs flock,
 timeout and stat. It does not enable systemd linger automatically.
 
-## Default: curl from GitHub
+## Default: curl from the official website
 
 Use the privately maintained bootstrap hosted by Mons:
 
@@ -92,15 +93,14 @@ To select a specific published Host version:
 curl -fsSL https://mons.cc/install.sh | sh -s -- VERSION
 ```
 
-Replace `VERSION` with the published `x.y.z` value, for example `0.5.29`.
-Explicit versions use the `cli-vVERSION` release tag without a version-list
-request. By default, the installer selects the highest numeric CLI version
-among the latest 20 GitHub release records; published development previews are
-included, while drafts and non-CLI tags are ignored. API failures stop before
-installation; specify a version to avoid the list request.
+Replace `VERSION` with the published `x.y.z` value, for example `0.5.30`.
+By default, the installer reads the current platform version from
+`https://mons.cc/downloads/latest.json`. Explicit versions skip the manifest
+request. No GitHub API, account or token is required; an invalid or unavailable
+manifest stops before installation, without silently switching download sources.
 
 The bootstrap downloads the compiled CLI ZIP, its SHA256 and
-`INSTALLER-SHA256SUMS` from GitHub. It validates the archive/binary inventory and
+`INSTALLER-SHA256SUMS` from the official website. It validates the archive/binary inventory and
 the versioned private platform installer served by `mons.cc`, then installs the
 CLI and registers/starts the local user-level Host service. Installer and website
 source are maintained privately, not in this repository. macOS signature
@@ -110,8 +110,8 @@ Developer ID or Apple notarization. App and Relay installation are not provided.
 ## Alternative: npm/npx
 
 This route requires Node.js 20 or later and npm. The development preview is
-published as `@venjiang/mons@0.5.29` with the `beta` tag. macOS is still ad-hoc
-signed and unnotarized. npm's initial `latest` tag currently selects the same
+published as `@venjiang/mons@0.5.30` with `beta` and `latest`. macOS is still ad-hoc
+signed and unnotarized. npm's `latest` tag selects the same
 preview; it does not establish Developer ID signing or Apple approval.
 
 ```sh
@@ -144,11 +144,26 @@ bin directory. Check which command is selected:
 ```sh
 command -v mons
 mons --version
+mons -V
 mons status
 ```
 
-Use the same channel for routine upgrades. curl re-runs its verified installer;
-npm can install an explicit published package version. Both use the same Host
+CLI 0.5.30 supports `mons --version` and `mons -V`; the old `mons version`
+subcommand is removed. Check for updates without installing, or update explicitly:
+
+```sh
+mons update --check
+mons update
+```
+
+Both commands read the official website's platform version. An identical or
+newer installed version is not reinstalled or downgraded. Native updates use
+the verified website installer; npm updates preserve their owning global prefix
+and require matching main/native packages on npm. Local project and npx entries
+do not automatically change project dependencies or another global installation.
+Older releases need one ordinary curl/npm upgrade before they gain this command.
+
+Use the same channel for routine upgrades. Both use the same Host
 identity and pairing storage and attempt to restore the old service on failure.
 They do not create separate Host services per installation channel.
 

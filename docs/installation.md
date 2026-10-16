@@ -51,7 +51,7 @@ the release's README snapshot, not the CLI binary or website source. They are
 not installation packages; use the named platform assets in the table above.
 
 Installation creates or updates a per-user Host service. It does not install
-the mobile app or configure SSH access or Herdr/tmux. Container CLI smoke tests
+the mobile app or configure SSH access or an external Herdr/tmux. Container CLI smoke tests
 do not replace real Linux systemd installation or complete pairing and
 upgrade/rollback acceptance.
 
@@ -64,7 +64,9 @@ upgrade/rollback acceptance.
 | Windows | Not supported by the current Host packages |
 
 The Host installer does not enable SSH access, create user accounts or install
-Herdr/tmux. Configure those separately if you need them. For macOS terminal
+an external Herdr/tmux. Builds that carry bundled Herdr prepare a separate
+private runtime; check the binary's help before using that capability. Configure
+external multiplexers separately if needed. For macOS terminal
 access, enable Remote Login for the intended user. Linux requires an SSH server
 and credentials accepted by that server.
 
@@ -175,6 +177,28 @@ the shared CLI path, the Host installer leaves its launcher untouched.
 `npm uninstall -g` removes the npm entry, not the independently installed Host
 service or its pairing records. `mons unpair` revokes pairing; it is not a
 service-uninstall command. Do not delete identity files to resolve an upgrade.
+
+## Built-in terminal and session commands
+
+Newer Host source builds include a private bundled Herdr terminal and
+`mons session attach`, `mons session stop` and `mons session delete`. These
+capabilities are separate from publishing a package. Check the actual binary
+with `mons --help` and `mons session --help`; do not assume that the currently
+published preview includes commands from a later source merge.
+
+In a supporting build, `mons` in an interactive terminal or `mons open` selects
+`default`; `mons session attach work` creates, starts or enters a named private
+session. The original `mons open work` and `mons ls [--json]` remain supported.
+No separate Herdr/tmux installation is needed for bundled sessions; existing
+external installations remain independent. SSH access must still be enabled
+separately.
+
+**Stop terminates pane processes; delete permanently removes saved state.**
+Delete requires an already stopped named session, refuses unknown status and
+cannot delete `default`. There is no CLI detach command. Read the
+[session lifecycle guide](getting-started.md#stop-or-permanently-delete-a-session)
+before using either destructive operation. `mons update` only retrieves a
+published version and cannot install unpublished session commands.
 
 ## Next
 

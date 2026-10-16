@@ -2,16 +2,17 @@
 
 ## Host download returns 404
 
-Check the requested version against the
-[CLI releases](https://github.com/venjiang/mons.cc/releases). Versions use a
-`cli-vVERSION` tag, for example `cli-v0.5.29`; a missing platform ZIP or checksum
-stops installation. The automatic `Source code` archives are documentation
+Check the requested URL and version against
+[official downloads](https://mons.cc/downloads/). The curl installer and
+`mons update` use the website's platform manifest; GitHub is an optional mirror,
+not a required API. A missing entry, manifest, platform ZIP, checksum or installer
+stops installation. GitHub's automatic `Source code` archives are documentation
 snapshots, not replacement binary packages. Do not bypass a failed checksum.
 
 To verify the published preview without installing or changing the service:
 
 ```sh
-curl -fsSL https://mons.cc/install.sh | sh -s -- --verify-only 0.5.29
+curl -fsSL https://mons.cc/install.sh | sh -s -- --verify-only
 ```
 
 The curl entry installs the CLI and its local Host service only, not the mobile
@@ -75,6 +76,27 @@ For failures during a switch, report the original and new network types,
 whether Tailscale was active, the route before and after the switch, and
 whether the same session resumed. A later successful LAN connection does not
 by itself explain an earlier cellular failure.
+
+## Session commands are unknown or a session is stopped
+
+Run `command -v mons`, `mons --version` and `mons session --help`. Source merges
+and documentation changes do not update an installed binary, and `mons update`
+only retrieves a published version. Do not delete identity/pairing files to try
+to enable a missing command.
+
+On a supporting build, `mons ls --json` shows the real names and states.
+`mons session attach work` can create, start or enter `work`; `mons open work`
+still works. A saved app display alias is not the real CLI session name.
+
+**`mons session stop work` terminates pane processes.** It keeps saved state,
+not the original running processes. Stop is not detach, and there is no CLI
+`session detach` command. `mons session delete work` permanently removes saved
+state, requires a stopped named session and cannot delete `default`. Missing
+names, wrong case, unknown/unreadable status and failed state queries are
+rejected; preserve the error instead of deleting directories manually. Do not
+attach/open and delete the same session concurrently. For a leading hyphen use
+`--`, such as `mons session attach -- -work`. See the
+[session guide](getting-started.md#stop-or-permanently-delete-a-session).
 
 ## Host logs and app diagnostics
 

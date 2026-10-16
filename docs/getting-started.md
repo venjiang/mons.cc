@@ -178,15 +178,17 @@ logs, routes and useful bug-report details.
 with `-n` (1–2000 recent lines). `-l`/`--level` controls the display filter only.
 `mons --version` and `mons -V` show binary/protocol versions; there is no
 `mons version` subcommand. `mons update` performs an explicit published-version
-upgrade and may briefly restart the Host; it preserves the native/npm channel
-and does not downgrade a newer local build.
+native upgrade from the website and may briefly restart the Host; it does not
+downgrade a newer local build. npm distribution is retired. Existing npm users
+must explicitly migrate before using website updates; see
+[Installation](installation.md#migrate-an-existing-npm-installation).
 
 **`mons unpair` revokes all devices paired with this Host.** It is not a
 service-uninstall or session-delete command. `mons serve` and `mons serve --once`
 run the Host in the foreground or for one cycle and may initialize state; they
 are not read-only checks. Do not start a second Host beside the installed user
-service. The `install` command is provided by the npm entry, not the native ZIP
-CLI. See [Installation](installation.md) before changing installation channels.
+service. `install` is not a native ZIP CLI command. See
+[Installation](installation.md) before changing installation methods.
 
 ## Beta feedback
 

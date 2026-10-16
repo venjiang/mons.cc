@@ -5,7 +5,8 @@
 Mons is in development. [Mons CLI 0.5.30 development preview](https://mons.cc/downloads/)
 contains native Host ZIPs for macOS and Linux. ZIPs and their checksum files are
 downloaded from the official website, including through the curl installer below.
-The npm preview `@venjiang/mons@0.5.30` is published with `latest` and `beta`.
+npm distribution is retired; no new npm versions will be published. Previously
+published packages are not withdrawn. See the migration section below for old installations.
 
 This repository provides CLI and local Host service installation only. It does
 not provide mobile app or Relay downloads/installations.
@@ -109,33 +110,44 @@ source are maintained privately, not in this repository. macOS signature
 integrity and architecture checks remain enabled; they do not establish
 Developer ID or Apple notarization. App and Relay installation are not provided.
 
-## Alternative: npm/npx
+## Migrate an existing npm installation
 
-This route requires Node.js 20 or later and npm. The development preview is
-published as `@venjiang/mons@0.5.30` with `beta` and `latest`. macOS is still ad-hoc
-signed and unnotarized. npm's `latest` tag selects the same
-preview; it does not establish Developer ID signing or Apple approval.
+The old npm launcher cannot receive future website-only versions. Its update
+command requires matching npm packages and may refuse an update. The native
+installer will not take over an npm-owned link automatically.
 
-```sh
-npm install -g @venjiang/mons@beta
-mons status
-mons pair
-```
-
-Use a writable npm global prefix as your normal user, without sudo. Keep
-optional dependencies enabled: the matching native binary is in a platform
-package. Global installation invokes the same service installer as curl.
-Local project installation and npx cache downloads do not start the service.
-
-To explicitly install or upgrade the Host using the package:
+In the original npm environment, inspect the selected command, global prefix
+and installed main package:
 
 ```sh
-npx @venjiang/mons@beta install
+command -v mons
+npm prefix -g
+npm ls -g @venjiang/mons --depth=0
 ```
 
-If installation scripts were disabled with `--ignore-scripts`, run the npm
-entry's `mons install` afterwards. The native ZIP CLI does not have that
-package-specific command. No second binary download takes place at runtime.
+After confirming that this prefix owns the selected launcher, remove only its
+global main package. Replace the placeholder with that exact original prefix:
+
+```sh
+npm uninstall -g --prefix /absolute/original/prefix @venjiang/mons
+```
+
+Do not use sudo or force an overwrite. This removes the npm entry, not the
+independently installed Host service, identity, pairing or session state.
+Project-local/npx entries are separate; do not modify project dependencies or
+other global packages as part of this migration.
+
+Then run the website installer:
+
+```sh
+curl -fsSL https://mons.cc/install.sh | sh
+```
+
+Refresh the shell command cache or open a new terminal. Confirm that
+`command -v mons` selects `~/.local/bin/mons`, then run `mons --version` and
+`mons status`. The website installs only a published platform version, not an
+unpublished source build. Installation may briefly restart the Host; do not
+delete identity, pairing or Herdr directories to resolve a migration failure.
 
 ## Commands and upgrades
 
@@ -160,23 +172,61 @@ mons update
 
 Both commands read the official website's platform version. An identical or
 newer installed version is not reinstalled or downgraded. Native updates use
-the verified website installer; npm updates preserve their owning global prefix
-and require matching main/native packages on npm. Local project and npx entries
-do not automatically change project dependencies or another global installation.
-Older releases need one ordinary curl/npm upgrade before they gain this command.
+the verified website installer. Old npm/project/npx entries are not automatically
+converted or overwritten; migrate explicitly as described above. Older native
+releases without the update command need one ordinary curl upgrade first.
+Older Linux releases that already have `update` can also need a one-time curl
+migration; see [Legacy Linux update fails on bundled Herdr](#legacy-linux-update-fails-on-bundled-herdr).
 
-Use the same channel for routine upgrades. Both use the same Host
-identity and pairing storage and attempt to restore the old service on failure.
-They do not create separate Host services per installation channel.
+The installer preserves Host identity and pairing and attempts to restore the
+old service on failure. It does not create another Host per installation method.
+`mons unpair` revokes pairing; it is not a service-uninstall command. Do not
+delete identity files to resolve an upgrade.
 
-If an existing ZIP CLI occupies the same path as npm's global bin, npm may
-report `EEXIST` before installation scripts run. Use a separate writable npm
-prefix rather than forcing replacement of an existing command. When npm owns
-the shared CLI path, the Host installer leaves its launcher untouched.
+## Legacy Linux update fails on bundled Herdr
 
-`npm uninstall -g` removes the npm entry, not the independently installed Host
-service or its pairing records. `mons unpair` revokes pairing; it is not a
-service-uninstall command. Do not delete identity files to resolve an upgrade.
+Older native Linux clients, including CLI 0.5.30, can reject a valid release
+that bundles Herdr with this error:
+
+```text
+Host SBOM does not match downloaded binary/version
+```
+
+Those clients have `mons update`, but its package validation is embedded in
+the installed executable and only recognizes the older dependency inventory.
+Publishing a new ZIP cannot repair that embedded validation. The rejected
+update does not install the new CLI or restart the Host.
+
+**Use this recovery only after both the fixed website installer and a fixed
+release are available for your Linux platform.** The compatibility fix is
+planned for CLI 0.6.5; a source change or a new ZIP alone does not establish
+that both are deployed. Until then, wait for the corrected installation entry
+and release. Do not bypass SBOM, checksum or TLS checks.
+
+Once both are available, first verify the published download without installing:
+
+```sh
+curl -fsSL https://mons.cc/install.sh | sh -s -- --verify-only
+```
+
+If verification succeeds, run the current website installer once as your normal
+user, without sudo:
+
+```sh
+curl -fsSL https://mons.cc/install.sh | sh
+```
+
+Then check `command -v mons`, `mons --version` and `mons status`. The command
+must select the standard native installation, not an old npm/project entry.
+After this one-time migration, the fixed CLI can use `mons update` for later
+published releases. Installation may briefly restart the Host, but does not
+require deleting identity, pairing, session state or Herdr directories.
+
+If verification still reports an SBOM mismatch after the fixed entry and
+release are confirmed available, stop and retain the exact error and versions
+for a report; do not force installation. Existing npm users must instead begin
+with the [npm migration](#migrate-an-existing-npm-installation) to preserve
+package ownership.
 
 ## Built-in terminal and session commands
 

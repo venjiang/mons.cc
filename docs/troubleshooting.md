@@ -19,6 +19,33 @@ The curl entry installs the CLI and its local Host service only, not the mobile
 app or Relay. See [Installation](installation.md) for platform requirements and
 the macOS ad-hoc signing limitation.
 
+## Linux update reports an SBOM mismatch
+
+An older native Linux CLI, including 0.5.30, may report:
+
+```text
+Host SBOM does not match downloaded binary/version
+```
+
+When updating to a release that bundles Herdr, this can be the old dependency
+inventory check embedded in the installed CLI. Having the `update` command
+does not mean that check supports bundled Herdr. The rejection leaves the old
+installation in place; repeatedly running `mons update` cannot update its own
+embedded validation.
+
+Wait until **both the fixed website installer and a fixed release are available
+for your Linux platform**, then follow the
+[one-time curl migration](installation.md#legacy-linux-update-fails-on-bundled-herdr).
+The fix is planned for CLI 0.6.5; a documentation or source update is not proof
+of deployment. Verify the download first, then install once through the website;
+later releases can use `mons update` normally. npm users must follow the
+[npm migration](installation.md#migrate-an-existing-npm-installation) first.
+
+Do not remove identity, pairing or session directories, disable validation or
+force an overwrite. If a fixed client still reports this error, retain the
+exact error and versions and report it rather than treating every SBOM mismatch
+as this legacy compatibility issue.
+
 ## Collect the basic facts
 
 Record the app version, Host version, operating systems, the action that
@@ -39,7 +66,10 @@ is running, especially when multiple installation entries exist.
 ## `mons` is not found
 
 The native installer's CLI is normally `~/.local/bin/mons`; ensure its
-directory is in PATH. npm uses its own global bin location. Restarting the
+directory is in PATH. Legacy npm entries use their original global bin location;
+npm distribution is retired, so follow the
+[migration guide](installation.md#migrate-an-existing-npm-installation) rather
+than reinstalling an old npm package. Restarting the
 shell or refreshing its command cache may be needed after an installation.
 Check the installer's final output before assuming installation succeeded.
 

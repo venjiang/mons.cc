@@ -15,9 +15,9 @@ not Developer ID signed or notarized, and Gatekeeper may block it. See the
 The [curl installer](docs/installation.md#default-curl-from-the-official-website) downloads
 the compiled CLI from mons.cc, verifies the privately maintained platform
 installer, then installs the CLI and registers/starts the local Host service.
-The [npm development preview](https://www.npmjs.com/package/@venjiang/mons)
-is available as `@venjiang/mons@0.5.30` with both `latest` and `beta`. It uses the
-same native binaries and local Host installer; macOS signing limits still apply.
+npm distribution is retired. Previously published packages are not withdrawn,
+but new installations and updates use the website. Existing npm users should
+follow the [migration guide](docs/installation.md#migrate-an-existing-npm-installation).
 
 ## Install the CLI and Host service
 
@@ -31,22 +31,13 @@ Run as your normal user without `sudo`. The Host service is not the Relay
 service; installation does not enable SSH or install Herdr/tmux. See the
 installation guide for checksum verification, requirements and upgrade safety.
 
-For developers with Node.js 20 or later:
-
-```sh
-npm install -g @venjiang/mons@beta
-# Or explicitly install/upgrade the local Host service:
-npx @venjiang/mons@beta install
-```
-
-Use a writable npm prefix without `sudo`; do not force replacement of an
-existing CLI link. npm's `latest` tag points to this
-development preview, not a notarized macOS release.
+Node.js/npm are not required. Do not force replacement of an existing npm-owned
+CLI link or delete Host state when changing installation methods.
 
 ## Start here
 
 - [Website](https://mons.cc)
-- [Installation](docs/installation.md) — preview ZIPs, website-backed curl and npm/npx.
+- [Installation](docs/installation.md) — preview ZIPs, website-backed curl and legacy npm migration.
 - [Getting started](docs/getting-started.md) — connections, pairing and sessions.
 - [Troubleshooting](docs/troubleshooting.md) — connection problems, logs and diagnostics.
 - [Report a bug or request a feature](https://github.com/venjiang/mons.cc/issues/new/choose)

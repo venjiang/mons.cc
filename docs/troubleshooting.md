@@ -38,8 +38,7 @@ for your Linux platform**, then follow the
 [one-time curl migration](installation.md#legacy-linux-update-fails-on-bundled-herdr).
 The fix is planned for CLI 0.6.5; a documentation or source update is not proof
 of deployment. Verify the download first, then install once through the website;
-later releases can use `mons update` normally. npm users must follow the
-[npm migration](installation.md#migrate-an-existing-npm-installation) first.
+later releases can use `mons update` normally.
 
 Do not remove identity, pairing or session directories, disable validation or
 force an overwrite. If a fixed client still reports this error, retain the
@@ -66,11 +65,8 @@ is running, especially when multiple installation entries exist.
 ## `mons` is not found
 
 The native installer's CLI is normally `~/.local/bin/mons`; ensure its
-directory is in PATH. Legacy npm entries use their original global bin location;
-npm distribution is retired, so follow the
-[migration guide](installation.md#migrate-an-existing-npm-installation) rather
-than reinstalling an old npm package. Restarting the
-shell or refreshing its command cache may be needed after an installation.
+directory is in PATH. Check that `command -v mons` selects that native entry.
+Open a new terminal or refresh the shell command cache after installation.
 Check the installer's final output before assuming installation succeeded.
 
 ## Pairing fails or expires

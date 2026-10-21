@@ -179,9 +179,7 @@ with `-n` (1–2000 recent lines). `-l`/`--level` controls the display filter on
 `mons --version` and `mons -V` show binary/protocol versions; there is no
 `mons version` subcommand. `mons update` performs an explicit published-version
 native upgrade from the website and may briefly restart the Host; it does not
-downgrade a newer local build. npm distribution is retired. Existing npm users
-must explicitly migrate before using website updates; see
-[Installation](installation.md#migrate-an-existing-npm-installation).
+downgrade a newer local build.
 
 **`mons unpair` revokes all devices paired with this Host.** It is not a
 service-uninstall or session-delete command. `mons serve` and `mons serve --once`

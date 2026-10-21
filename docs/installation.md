@@ -5,8 +5,6 @@
 Mons is in development. [Mons CLI 0.5.30 development preview](https://mons.cc/downloads/)
 contains native Host ZIPs for macOS and Linux. ZIPs and their checksum files are
 downloaded from the official website, including through the curl installer below.
-npm distribution is retired; no new npm versions will be published. Previously
-published packages are not withdrawn. See the migration section below for old installations.
 
 This repository provides CLI and local Host service installation only. It does
 not provide mobile app or Relay downloads/installations.
@@ -110,50 +108,10 @@ source are maintained privately, not in this repository. macOS signature
 integrity and architecture checks remain enabled; they do not establish
 Developer ID or Apple notarization. App and Relay installation are not provided.
 
-## Migrate an existing npm installation
-
-The old npm launcher cannot receive future website-only versions. Its update
-command requires matching npm packages and may refuse an update. The native
-installer will not take over an npm-owned link automatically.
-
-In the original npm environment, inspect the selected command, global prefix
-and installed main package:
-
-```sh
-command -v mons
-npm prefix -g
-npm ls -g @venjiang/mons --depth=0
-```
-
-After confirming that this prefix owns the selected launcher, remove only its
-global main package. Replace the placeholder with that exact original prefix:
-
-```sh
-npm uninstall -g --prefix /absolute/original/prefix @venjiang/mons
-```
-
-Do not use sudo or force an overwrite. This removes the npm entry, not the
-independently installed Host service, identity, pairing or session state.
-Project-local/npx entries are separate; do not modify project dependencies or
-other global packages as part of this migration.
-
-Then run the website installer:
-
-```sh
-curl -fsSL https://mons.cc/install.sh | sh
-```
-
-Refresh the shell command cache or open a new terminal. Confirm that
-`command -v mons` selects `~/.local/bin/mons`, then run `mons --version` and
-`mons status`. The website installs only a published platform version, not an
-unpublished source build. Installation may briefly restart the Host; do not
-delete identity, pairing or Herdr directories to resolve a migration failure.
-
 ## Commands and upgrades
 
 The native installer normally exposes `mons` at `~/.local/bin/mons`. Ensure
-that directory is on your PATH. npm exposes its launcher through its global
-bin directory. Check which command is selected:
+that directory is on your PATH. Check which command is selected:
 
 ```sh
 command -v mons
@@ -172,9 +130,8 @@ mons update
 
 Both commands read the official website's platform version. An identical or
 newer installed version is not reinstalled or downgraded. Native updates use
-the verified website installer. Old npm/project/npx entries are not automatically
-converted or overwritten; migrate explicitly as described above. Older native
-releases without the update command need one ordinary curl upgrade first.
+the verified website installer. Older native releases without the update
+command need one ordinary curl upgrade first.
 Older Linux releases that already have `update` can also need a one-time curl
 migration; see [Legacy Linux update fails on bundled Herdr](#legacy-linux-update-fails-on-bundled-herdr).
 
@@ -217,16 +174,14 @@ curl -fsSL https://mons.cc/install.sh | sh
 ```
 
 Then check `command -v mons`, `mons --version` and `mons status`. The command
-must select the standard native installation, not an old npm/project entry.
+must select the standard native installation at `~/.local/bin/mons`.
 After this one-time migration, the fixed CLI can use `mons update` for later
 published releases. Installation may briefly restart the Host, but does not
 require deleting identity, pairing, session state or Herdr directories.
 
 If verification still reports an SBOM mismatch after the fixed entry and
 release are confirmed available, stop and retain the exact error and versions
-for a report; do not force installation. Existing npm users must instead begin
-with the [npm migration](#migrate-an-existing-npm-installation) to preserve
-package ownership.
+for a report. Do not force installation.
 
 ## Built-in terminal and session commands
 

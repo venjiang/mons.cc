@@ -45,10 +45,6 @@ verification, run the compiled executable from the extracted directory:
 ./mons --help
 ```
 
-GitHub's automatic `Source code` ZIP and tar.gz for `cli-v0.5.29` contain only
-the release's README snapshot, not the CLI binary or website source. They are
-not installation packages; use the named platform assets in the table above.
-
 Installation creates or updates a per-user Host service. It does not install
 the mobile app or configure SSH access or an external Herdr/tmux. Container CLI smoke tests
 do not replace real Linux systemd installation or complete pairing and

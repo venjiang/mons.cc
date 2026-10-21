@@ -4,10 +4,9 @@
 
 Check the requested URL and version against
 [official downloads](https://mons.cc/downloads/). The curl installer and
-`mons update` use the website's platform manifest; GitHub is an optional mirror,
-not a required API. A missing entry, manifest, platform ZIP, checksum or installer
-stops installation. GitHub's automatic `Source code` archives are documentation
-snapshots, not replacement binary packages. Do not bypass a failed checksum.
+`mons update` use the website's platform manifest. A missing entry, manifest,
+platform ZIP, checksum, or installer stops installation. Download packages only
+from the official website. Do not bypass a failed checksum.
 
 To verify the published preview without installing or changing the service:
 

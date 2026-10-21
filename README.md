@@ -44,20 +44,14 @@ and Relay downloads, installers and deployment flows are outside this repository
 
 ## This repository
 
-This is the public user-documentation, optional CLI-mirror and feedback repository.
-The official website is the primary binary distribution and update source.
-Historical mirrors remain in [GitHub Releases](https://github.com/venjiang/mons.cc/releases);
-product source and large binary files are not committed to this repository.
+This is the public user-documentation and feedback repository.
+The official website is the only binary distribution and update source.
+Get CLI packages and checksums from [official downloads](https://mons.cc/downloads/).
+Product source and binary files are not committed to this repository.
 
 Website source, installation logic, build tooling and deployment are maintained
 in the private development repository. The website remains at https://mons.cc;
 moving its source does not change the CLI download or installation addresses.
-
-For `cli-v0.5.29`, the release tag is an independent README-only snapshot.
-GitHub still displays automatic `Source code (zip)` and `Source code (tar.gz)`
-links, but those archives contain documentation only. Download the named
-`mons-0.5.29-*.zip` assets for the compiled CLI. Earlier repository history
-has not been rewritten by the website-source migration.
 
 The repository's [Apache-2.0 license](LICENSE) covers the documentation source
 here. Product binaries have their own licensing and
